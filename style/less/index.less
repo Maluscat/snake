@@ -95,9 +95,7 @@ button {
       }
       .btn-group {
         display: flex;
-        &:not(:last-child) {
-          margin-bottom: .5em;
-        }
+        flex-wrap: wrap;
       }
       button {
         margin: 0 .25em;
@@ -123,3 +121,26 @@ button {
     }
   }
 }
+
+[data-overlay="controls"] {
+  .key-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: .2em .45em;
+      span {
+        flex: 1;
+        margin-right: .75em;
+      }
+      button {
+        font-size: .9em;
+        display: inline-block;
+      }
+    }
+  }
+}
+

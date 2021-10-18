@@ -47,6 +47,81 @@ function handleMenu(e, menuTarget = this.dataset.menu, spacePause) {
   }
 }
 
+function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = parentNode.lastElementChild) {
+  const button = keyButton.cloneNode(true);
+  const container = button.querySelector('.container');
+  // keeps track of the current value as stored in the keyControl actions
+  let arrayValue = btnContent;
+
+  parentNode.insertBefore(button, lastChild);
+
+  const keyGroupArray = keyControl.actions.keydown[button.parentNode.dataset.keyGroup].keys;
+
+  if (btnContent) {
+    container.textContent = btnContent;
+  } else {
+    button.focus();
+    startKeyListen();
+  }
+
+  button.addEventListener('click', startKeyListen);
+
+  return button;
+
+
+  function startKeyListen() {
+    container.textContent = '...';
+
+    button.addEventListener('keydown', listenForNewKey);
+    button.addEventListener('blur', removeButton);
+  }
+
+  function listenForNewKey(e) {
+    if (e.code === 'Escape') {
+      removeButton();
+      return;
+    }
+    e.preventDefault();
+
+    let curlyCode = '{' + e.code + '}';
+    let key = e.key;
+    // If pressed key is a letter, uppercase it
+    if (/^Key/.test(e.code) && e.key != 'ß') {
+      key = key.toUpperCase();
+    }
+
+    if (e.key === e.code || 'Key' + e.key.toUpperCase() === e.code) {
+      container.textContent = key;
+    } else {
+      container.textContent = key + ' ' + curlyCode;
+    }
+
+    updateCurrentKey(curlyCode);
+
+    button.removeEventListener('keydown', listenForNewKey);
+    button.removeEventListener('blur', removeButton);
+  }
+
+  function removeButton() {
+    keyGroupArray.splice(keyGroupArray.indexOf(arrayValue), 1);
+    button.remove();
+  }
+
+  function updateCurrentKey(newValue) {
+    if (isNewItem) {
+      keyGroupArray.push(newValue);
+      isNewItem = false;
+    } else {
+      keyGroupArray[keyGroupArray.indexOf(arrayValue)] = newValue;
+    }
+    arrayValue = newValue;
+  }
+}
+
+function addControlsKeyBtn(e) {
+  insertNewKeyButton(null, true, this.parentNode);
+}
+
 function changeDifficulty() {
   const difficulty = this.textContent.trim().toLowerCase();
   switch (difficulty) {

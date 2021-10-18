@@ -98,7 +98,56 @@
                 Keyboard Controls
               </div>
               <div class="body">
-
+                <ul class="key-list">
+                  <li>
+                    <span>Move forward</span>
+                    <div class="btn-group" data-key-group="forward">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <span>Move backward</span>
+                    <div class="btn-group" data-key-group="backward">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <span>Move left</span>
+                    <div class="btn-group" data-key-group="left">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <span>Move right</span>
+                    <div class="btn-group" data-key-group="right">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <span>Move up</span>
+                    <div class="btn-group" data-key-group="up">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <span>Move down</span>
+                    <div class="btn-group" data-key-group="down">
+                      <button type="button" class="add-key-btn">
+                        <div class="container">+</div>
+                      </button>
+                    </div>
+                  </li>
+                </ul>
               </div>
               <button type="button" class="focus" data-menu="controls">
                 <div class="container">Resume</div>
@@ -138,18 +187,33 @@
 
       const overlays = gameWindow.querySelector('.menu-overlay');
       const overlayStart = overlays.querySelector('[data-overlay="start"]');
+      const overlayControls = overlays.querySelector('[data-overlay="controls"]');
       const pauseFocusBtn = overlays.querySelector('[data-overlay="playPause"] button.focus');
       const btnsStart = overlays.querySelectorAll('.new-game');
       const btnsDiffChange = overlays.querySelectorAll('.change-diff');
 
+      const controlsKeyGroups = overlayControls.querySelectorAll('[data-key-group]');
+      const controlsAddBtns = overlayControls.querySelectorAll('.add-key-btn');
+
       const snake = new Snake3D(document.getElementById('canvas'));
       const keyControl = new KeyControl(gameWindow);
+
+      const keyButton = (function() {
+        const button = document.createElement('button');
+        button.type = 'button';
+        const container = document.createElement('div');
+        container.classList.add('container');
+
+        button.appendChild(container);
+        return button;
+      })();
 
       let highscore = 0;
 
       for (const l of btnsDiffChange) l.addEventListener('click', changeDifficulty);
       for (const l of btnsStart) l.addEventListener('click', newGame);
       for (const l of menuBtns) l.addEventListener('click', handleMenu);
+      for (const l of controlsAddBtns) l.addEventListener('click', addControlsKeyBtn);
 
       snake.draw();
 
@@ -162,51 +226,58 @@
 
       keyControl.registerAction('pauseUp', {
         event: 'keyup',
-        codes: ['Space'],
+        keys: ['{Space}'],
         fn: () => pauseFocusBtn.focus()
       });
 
       keyControl.registerActions({
         playPause: {
-          codes: ['Space'],
+          keys: ['{Space}'],
           fn: (e, name) => handleMenu(e, name, true)
         },
         restart: {
-          codes: ['KeyR'],
+          keys: ['{KeyR}'],
           fn: handleMenu
         }
       });
 
       keyControl.registerActions({
         forward: {
-          codes: ['KeyQ'],
+          keys: ['{KeyQ}'],
           tags: ['arrow-controls']
         },
         backward: {
-          codes: ['KeyE'],
+          keys: ['{KeyE}'],
           tags: ['arrow-controls']
         },
         left: {
-          codes: ['KeyA'],
-          keys: ['ArrowLeft'],
+          keys: ['{KeyA}', 'ArrowLeft'],
           tags: ['arrow-controls']
         },
         right: {
-          codes: ['KeyD'],
-          keys: ['ArrowRight'],
+          keys: ['{KeyD}', 'ArrowRight'],
           tags: ['arrow-controls']
         },
         up: {
-          codes: ['KeyW'],
-          keys: ['ArrowUp'],
+          keys: ['{KeyW}', 'ArrowUp'],
           tags: ['arrow-controls']
         },
         down: {
-          codes: ['KeyS'],
-          keys: ['ArrowDown'],
+          keys: ['{KeyS}', 'ArrowDown'],
           tags: ['arrow-controls']
         }
       });
+
+      (function() {
+        for (const keyActionGroup of controlsKeyGroups) {
+          const actionProps = keyControl.actions.keydown[keyActionGroup.dataset.keyGroup];
+          if (actionProps) {
+            actionProps.keys.forEach((key, i) => {
+              insertNewKeyButton(key, false, keyActionGroup);
+            })
+          }
+        }
+      }());
     </script>
   </body>
 </html>
