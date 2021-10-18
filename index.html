@@ -200,7 +200,7 @@
       const controlsAddBtns = overlayControls.querySelectorAll('.add-key-btn');
 
       const snake = new Snake3D(document.getElementById('canvas'));
-      const keyControl = new KeyControl(gameWindow);
+      const keyControl = new KeyControl(gameWindow, true);
 
       const keyButton = (function() {
         const button = document.createElement('button');
@@ -229,6 +229,24 @@
         fn: arrowKeyPress
       });
 
+      keyControl.registerActions({
+        'confirm': {
+          keys: [0],
+          gamepadTimeout: 200,
+          fn: () => document.activeElement.click()
+        },
+        'tabNext': {
+          keys: [1],
+          gamepadTimeout: 200,
+          fn: () => focusElementInTabIndex(1)
+        },
+        'tabPrevious': {
+          keys: [2],
+          gamepadTimeout: 200,
+          fn: () => focusElementInTabIndex(-1)
+        }
+      });
+
       keyControl.registerAction('pauseUp', {
         event: 'keyup',
         keys: ['{Space}'],
@@ -248,27 +266,27 @@
 
       keyControl.registerActions({
         forward: {
-          keys: ['{KeyQ}'],
+          keys: [6, '{KeyQ}'],
           tags: ['arrow-controls']
         },
         backward: {
-          keys: ['{KeyE}'],
+          keys: [7, '{KeyE}'],
           tags: ['arrow-controls']
         },
         left: {
-          keys: ['{KeyA}', 'ArrowLeft'],
+          keys: [14, '{KeyA}', 'ArrowLeft'],
           tags: ['arrow-controls']
         },
         right: {
-          keys: ['{KeyD}', 'ArrowRight'],
+          keys: [15, '{KeyD}', 'ArrowRight'],
           tags: ['arrow-controls']
         },
         up: {
-          keys: ['{KeyW}', 'ArrowUp'],
+          keys: [12, '{KeyW}', 'ArrowUp'],
           tags: ['arrow-controls']
         },
         down: {
-          keys: ['{KeyS}', 'ArrowDown'],
+          keys: [13, '{KeyS}', 'ArrowDown'],
           tags: ['arrow-controls']
         }
       });
