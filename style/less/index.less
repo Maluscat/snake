@@ -1,0 +1,125 @@
+// out: ../index.css
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-color: hsl(0, 0%, 8%);
+  color: hsl(0, 0%, 95%);
+  font-size: 18px;
+}
+* {
+  box-sizing: border-box;
+}
+:not(.disabled):focus {
+  outline: none;
+  @color: #284763;
+  filter:
+    drop-shadow(1px 1px @color)
+    drop-shadow(-1px -1px @color)
+    drop-shadow(1px -1px @color)
+    drop-shadow(-1px 1px @color);
+}
+
+
+#game-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: .5em;
+}
+
+button {
+  cursor: pointer;
+  display: block;
+  border: none;
+  padding: 0;
+  color: inherit;
+  background-color: transparent;
+  font-size: inherit;
+  &.disabled {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+}
+.container {
+  padding: .4em .8em;
+  background-color: hsl(0, 0%, 14%);
+  @corner: .5em;
+  clip-path: polygon(100% @corner, 100% 100%, 100% 100%, @corner 100%, 0% calc(100% - @corner), 0 0, 0 0, calc(100% - @corner) 0);
+  transition:
+    background-color .065s ease-in-out,
+    clip-path .125s ease,
+    transform .125s ease;
+  button:not(.disabled) & {
+    &:hover {
+      background-color: hsl(0, 0%, 15.5%);
+    }
+    &:active {
+      transform: scale(1.025);
+      clip-path: polygon(100% 0, 100% calc(100% - @corner), calc(100% - @corner) 100%, 0 100%, 0% 100%, 0 @corner, @corner 0, 100% 0);
+    }
+  }
+}
+
+.game-wrapper {
+  position: relative;
+  canvas {
+    display: block;
+    background-color: hsl(0, 0%, 0%);
+  }
+  .menu-overlay {
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      .heading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 1em .5em;
+        background-color: hsla(0, 0%, 12%, .5);
+        text-align: center;
+        font-weight: bold;
+      }
+      .btn-group {
+        display: flex;
+        &:not(:last-child) {
+          margin-bottom: .5em;
+        }
+      }
+      button {
+        margin: 0 .25em;
+      }
+      &.hidden {
+        display: none;
+      }
+    }
+  }
+  .score {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-rows: max-content;
+    grid-gap: .5em .25em;
+    align-items: center;
+    margin-left: .5em;
+    padding: 0;
+    .container {
+      text-align: center;
+    }
+  }
+}
