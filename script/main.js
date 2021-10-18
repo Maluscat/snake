@@ -144,8 +144,12 @@ function changeDifficulty() {
 }
 
 function arrowKeyPress(e, name) {
-  snake.setDirection(name);
-  if (snake.getGameState() == 'initialized') startGame();
+  if (!overlays.querySelector('.menu:not(.hidden)')) {
+    snake.setDirection(name);
+    if (snake.getGameState() == 'initialized') {
+      startGame();
+    }
+  }
 }
 
 function newGame() {
