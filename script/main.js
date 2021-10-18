@@ -47,6 +47,10 @@ function handleMenu(e, menuTarget = this.dataset.menu, spacePause) {
   }
 }
 
+function toggleParentOverlay(e) {
+  this.parentNode.classList.toggle('backdrop-hidden');
+}
+
 function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = parentNode.lastElementChild) {
   const button = keyButton.cloneNode(true);
   const container = button.querySelector('.container');

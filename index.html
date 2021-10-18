@@ -47,6 +47,9 @@
               <button type="button" class="new-game focus" data-menu="gameover">
                 <div class="container">Restart</div>
               </button>
+              <button type="button" class="toggle-overlay">
+                <div class="container">Toggle overlay</div>
+              </button>
             </div>
             <div class="menu hidden" data-overlay="playPause">
               <div class="heading">
@@ -191,6 +194,7 @@
       const pauseFocusBtn = overlays.querySelector('[data-overlay="playPause"] button.focus');
       const btnsStart = overlays.querySelectorAll('.new-game');
       const btnsDiffChange = overlays.querySelectorAll('.change-diff');
+      const btnsToggleOverlay = overlays.querySelectorAll('.toggle-overlay');
 
       const controlsKeyGroups = overlayControls.querySelectorAll('[data-key-group]');
       const controlsAddBtns = overlayControls.querySelectorAll('.add-key-btn');
@@ -212,6 +216,7 @@
 
       for (const l of btnsDiffChange) l.addEventListener('click', changeDifficulty);
       for (const l of btnsStart) l.addEventListener('click', newGame);
+      for (const l of btnsToggleOverlay) l.addEventListener('click', toggleParentOverlay);
       for (const l of menuBtns) l.addEventListener('click', handleMenu);
       for (const l of controlsAddBtns) l.addEventListener('click', addControlsKeyBtn);
 
