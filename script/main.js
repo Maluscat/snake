@@ -126,6 +126,29 @@ function addControlsKeyBtn(e) {
   insertNewKeyButton(null, true, this.parentNode);
 }
 
+function focusElementInTabIndex(offset = 1) {
+  if (snake.getGameState() != 'active') {
+    // Idea from https://stackoverflow.com/a/35173443
+    const focusableElems =
+    Array.from(document.querySelectorAll('button:not([tabindex="-1"]), [tabIndex="0"]'))
+    .filter(elem => {
+      return elem.offsetHeight > 0 || elem.offsetWidth > 0 || elem === document.activeElement;
+    });
+
+    const focusIdx = focusableElems.indexOf(document.activeElement);
+    const newIndex = focusIdx + offset;
+    if (focusIdx === -1) {
+      gameWindow.focus();
+    } else if (newIndex >= focusableElems.length) {
+      focusableElems[0].focus();
+    } else if (newIndex < 0) {
+      focusableElems[focusableElems.length - 1].focus();
+    } else {
+      focusableElems[newIndex].focus();
+    }
+  }
+}
+
 function changeDifficulty() {
   const difficulty = this.textContent.trim().toLowerCase();
   switch (difficulty) {
