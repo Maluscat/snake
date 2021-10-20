@@ -136,7 +136,7 @@ class Snake3D extends GLBoiler {
     this.updateFieldSize(10);
 
     // ---- controls ----
-    this.controls = new Controls3D(canvas, this);
+    this.controls = new Controls3D(canvas, this.draw.bind(this));
     this.controls.assignNewState({
       scale: {
         x: 1.65,
