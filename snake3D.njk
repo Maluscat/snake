@@ -1,0 +1,48 @@
+{%- extends 'snake/snake-template.njk' -%}
+
+{% block keyList %}
+  <li>
+    <span>Move forward</span>
+    <div class="btn-group" data-key-group="forward">
+      <button type="button" class="add-key-btn">
+        <div class="container">+</div>
+      </button>
+    </div>
+  </li>
+  <li>
+    <span>Move backward</span>
+    <div class="btn-group" data-key-group="backward">
+      <button type="button" class="add-key-btn">
+        <div class="container">+</div>
+      </button>
+    </div>
+  </li>
+  {{ super() }}
+{% endblock %}
+
+{% block scriptImport %}
+  <script src="/js/graphics/webGL2SupportCheck.js"></script>
+  <script src="/js/graphics/Matrices.js"></script>
+  <script src="/js/graphics/Controls3D.js"></script>
+  <script src="/js/graphics/GLBoiler.js"></script>
+  <script src="/js/snake/Snake3D.js"></script>
+{% endblock %}
+
+{% block initScript %}
+  <script>'use strict';
+    const snake = new Snake3D(canvas);
+
+    snake.draw();
+
+    keyControl.registerActions({
+      forward: {
+        keys: [6, '{KeyQ}'],
+        tags: ['arrow-controls']
+      },
+      backward: {
+        keys: [7, '{KeyE}'],
+        tags: ['arrow-controls']
+      }
+    });
+  </script>
+{% endblock %}

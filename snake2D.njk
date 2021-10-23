@@ -1,0 +1,11 @@
+{%- extends 'snake/snake-template.njk' -%}
+
+{% block scriptImport %}
+  <script src="/js/snake/snake2D.js"></script>
+{% endblock %}
+
+{% block initScript %}
+  <script>'use strict';
+    const snake = new Snake2D(canvas);
+  </script>
+{% endblock %}
