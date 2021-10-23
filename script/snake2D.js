@@ -17,8 +17,8 @@ var Snake2D = (function() {
   function Snake2D(canvas) {
     ctx = canvas.getContext('2d');
     ctx.lineWidth = CELL;
-    // ctx.lineCap = 'round';
-    // ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
   }
 
   // ---- Internal functions ----
@@ -28,16 +28,16 @@ var Snake2D = (function() {
 
     switch (direction) {
       case 'left':
-        nextCell[0] = (--nextCell[0] + (canvas.width / CELL)) % (canvas.width / CELL);
+        nextCell[0]--;
         break;
       case 'right':
-        nextCell[0] = ++nextCell[0] % (canvas.width / CELL);
+        nextCell[0]++;
         break;
       case 'up':
-        nextCell[1] = (--nextCell[1] + (canvas.height / CELL)) % (canvas.height / CELL);
+        nextCell[1]--;
         break;
       case 'down':
-        nextCell[1] = ++nextCell[1] % (canvas.height / CELL);
+        nextCell[1]++;
         break;
     }
 
@@ -51,11 +51,11 @@ var Snake2D = (function() {
     }
 
     if (
-      // // If snake hits the wall
-      // nextCell[0] == -1 ||
-      // nextCell[1] == -1 ||
-      // nextCell[0] == canvas.width / CELL ||
-      // nextCell[1] == canvas.height / CELL ||
+      // If snake hits the wall
+      nextCell[0] == -1 ||
+      nextCell[1] == -1 ||
+      nextCell[0] == canvas.width / CELL ||
+      nextCell[1] == canvas.height / CELL ||
       // If snake hits itself
       direction && arrayIncludesPos(snakePos, nextCell)
     ) {
