@@ -1,10 +1,12 @@
-const menuBtns = document.querySelectorAll('button[data-menu]');
-const gameControlBtns = document.querySelectorAll('#game-controls button');
+const canvas = document.getElementById('canvas');
 const gameWrapper = document.querySelector('.game-wrapper');
 const gameWindow = gameWrapper.querySelector('.game-window');
 
 const gameScoreNode = gameWrapper.querySelector('.score .current .text');
 const highScoreNode = gameWrapper.querySelector('.score .highscore .text');
+
+const menuBtns = document.querySelectorAll('button[data-menu]');
+const gameControlBtns = document.querySelectorAll('#game-controls button');
 
 const overlays = gameWindow.querySelector('.menu-overlay');
 const overlayStart = overlays.querySelector('[data-overlay="start"]');
