@@ -52,8 +52,6 @@ window.addEventListener('DOMContentLoaded', function() {
       })
     }
   }
-
-  snake.draw();
 });
 
 
