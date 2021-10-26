@@ -105,7 +105,7 @@ class Snake3D extends GLBoiler {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
     this.aUniverPoints = gl.getAttribLocation(this.univerProgram, 'points');
-    this.uUniverColors = gl.getAttribLocation(this.univerProgram, 'colors');
+    this.aUniverColors = gl.getAttribLocation(this.univerProgram, 'colors');
     this.uPointsFieldSize = gl.getUniformLocation(this.pointsProgram, 'fieldSize');
     this.uPointsMatrices = gl.getUniformBlockIndex(this.pointsProgram, 'GlobalMatrices');
     this.uUniverMatrices = gl.getUniformBlockIndex(this.univerProgram, 'GlobalMatrices');
