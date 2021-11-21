@@ -69,6 +69,9 @@ button:not(.disabled) .container:active {
   -webkit-backdrop-filter: blur(24px);
   backdrop-filter: blur(24px);
 }
+.game-wrapper .menu-overlay .menu.backdrop-hidden {
+  pointer-events: none;
+}
 .game-wrapper .menu-overlay .menu.backdrop-hidden > button:not(.toggle-overlay) {
   display: none;
 }
@@ -101,6 +104,7 @@ button:not(.disabled) .container:active {
   right: 0;
   font-size: 0.9em;
   margin: 0.25em;
+  pointer-events: auto;
 }
 .game-wrapper .score {
   position: absolute;

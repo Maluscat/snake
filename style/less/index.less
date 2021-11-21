@@ -85,8 +85,11 @@ button {
         -webkit-backdrop-filter: blur(24px);
         backdrop-filter: blur(24px);
       }
-      &.backdrop-hidden > button:not(.toggle-overlay) {
-        display: none;
+      &.backdrop-hidden {
+        pointer-events: none;
+        > button:not(.toggle-overlay) {
+          display: none;
+        }
       }
       .heading {
         position: absolute;
@@ -117,6 +120,7 @@ button {
         right: 0;
         font-size: .9em;
         margin: .25em;
+        pointer-events: auto;
       }
     }
   }
