@@ -1,6 +1,6 @@
 'use strict';
 var Snake2D = (function() {
-  const CELL = 18;
+  const CELL = 20;
 
   let ctx;
   let applePos;
