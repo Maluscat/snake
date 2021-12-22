@@ -96,19 +96,19 @@ keyControl.registerActions({
 
 keyControl.registerActions({
   left: {
-    keys: [14, '{KeyA}', 'ArrowLeft'],
+    keys: ['[leftPadLeft]', '{KeyA}', 'ArrowLeft'],
     tags: ['arrow-controls']
   },
   right: {
-    keys: [15, '{KeyD}', 'ArrowRight'],
+    keys: ['[leftPadRight]', '{KeyD}', 'ArrowRight'],
     tags: ['arrow-controls']
   },
   up: {
-    keys: [12, '{KeyW}', 'ArrowUp'],
+    keys: ['[leftPadUp]', '{KeyW}', 'ArrowUp'],
     tags: ['arrow-controls']
   },
   down: {
-    keys: [13, '{KeyS}', 'ArrowDown'],
+    keys: ['[leftPadDown]', '{KeyS}', 'ArrowDown'],
     tags: ['arrow-controls']
   }
 });
