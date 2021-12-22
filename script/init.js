@@ -47,9 +47,13 @@ window.addEventListener('DOMContentLoaded', function() {
   for (const keyActionGroup of controlsKeyGroups) {
     const actionProps = keyControl.actions.keydown[keyActionGroup.dataset.keyGroup];
     if (actionProps) {
-      actionProps.keys.forEach((key, i) => {
-        insertNewKeyButton(key, false, keyActionGroup);
-      })
+      actionProps.keys.forEach(key => {
+        if (typeof key !== 'number') {
+          insertNewKeyButton(key, false, keyActionGroup);
+        } else {
+          insertNewKeyButton('[' + keyControl.GAMEPAD_BUTTONS[key] + ']', false, keyActionGroup);
+        }
+      });
     }
   }
 });
