@@ -66,8 +66,14 @@ button:not(.disabled) .container:active {
   left: 0;
 }
 .game-wrapper .menu-overlay .menu:not(.backdrop-hidden) {
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
+  background-color: hsla(0, 0%, 8%, 0.55);
+}
+@supports (-webkit-backdrop-filter: blur(24px)) or (backdrop-filter: blur(24px)) {
+  .game-wrapper .menu-overlay .menu:not(.backdrop-hidden) {
+    background-color: transparent;
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+  }
 }
 .game-wrapper .menu-overlay .menu.backdrop-hidden {
   pointer-events: none;

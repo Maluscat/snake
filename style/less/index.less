@@ -82,8 +82,14 @@ button {
       bottom: 0;
       left: 0;
       &:not(.backdrop-hidden) {
-        -webkit-backdrop-filter: blur(24px);
-        backdrop-filter: blur(24px);
+        background-color: hsla(0, 0%, 8%, .55);
+      }
+      @supports (-webkit-backdrop-filter: blur(24px)) or (backdrop-filter: blur(24px)) {
+        &:not(.backdrop-hidden) {
+          background-color: transparent;
+          -webkit-backdrop-filter: blur(24px);
+          backdrop-filter: blur(24px);
+        }
       }
       &.backdrop-hidden {
         pointer-events: none;
