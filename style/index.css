@@ -47,6 +47,18 @@ button:not(.disabled) .container:active {
   transform: scale(1.025);
   clip-path: polygon(100% 0, 100% calc(100% - 0.5em), calc(100% - 0.5em) 100%, 0 100%, 0% 100%, 0 0.5em, 0.5em 0, 100% 0);
 }
+.btn-group,
+.tab-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tab-group > button {
+  flex: 1;
+}
+.tab-group > button.active .container {
+  background-color: hsl(0, 0%, 20.5%);
+  font-weight: bold;
+}
 .game-wrapper {
   position: relative;
 }
@@ -65,6 +77,9 @@ button:not(.disabled) .container:active {
   bottom: 0;
   left: 0;
 }
+.game-wrapper .menu-overlay .menu > *:not(:last-child) {
+  margin-bottom: 0.5em;
+}
 .game-wrapper .menu-overlay .menu:not(.backdrop-hidden) {
   background-color: hsla(0, 0%, 8%, 0.55);
 }
@@ -81,6 +96,9 @@ button:not(.disabled) .container:active {
 .game-wrapper .menu-overlay .menu.backdrop-hidden > button:not(.toggle-overlay) {
   display: none;
 }
+.game-wrapper .menu-overlay .menu.hidden {
+  display: none;
+}
 .game-wrapper .menu-overlay .menu .heading {
   position: absolute;
   top: 0;
@@ -91,18 +109,17 @@ button:not(.disabled) .container:active {
   text-align: center;
   font-weight: bold;
 }
-.game-wrapper .menu-overlay .menu .btn-group {
-  display: flex;
-  flex-wrap: wrap;
+.game-wrapper .menu-overlay .menu .body > *:not(:last-child) {
+  margin-bottom: 0.3em;
 }
 .game-wrapper .menu-overlay .menu button {
   margin: 0 0.25em;
 }
-.game-wrapper .menu-overlay .menu.hidden {
-  display: none;
+.game-wrapper .menu-overlay .menu .container > button:first-child {
+  margin-left: 0;
 }
-.game-wrapper .menu-overlay .menu > *:not(:last-child) {
-  margin-bottom: 0.5em;
+.game-wrapper .menu-overlay .menu .container > button:last-child {
+  margin-right: 0;
 }
 .game-wrapper .menu-overlay .menu .toggle-overlay {
   position: absolute;
@@ -127,10 +144,18 @@ button:not(.disabled) .container:active {
 .game-wrapper .score .container {
   text-align: center;
 }
+[data-overlay="controls"] .key-lists {
+  display: grid;
+}
 [data-overlay="controls"] .key-list {
+  grid-column: 1 / 1;
+  grid-row: 1 / 1;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+[data-overlay="controls"] .key-list.hidden {
+  display: none;
 }
 [data-overlay="controls"] .key-list li {
   display: flex;

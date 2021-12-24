@@ -51,6 +51,22 @@ function toggleParentOverlay(e) {
   this.parentNode.classList.toggle('backdrop-hidden');
 }
 
+function switchControlsKeyLists(e) {
+  if (this.dataset.activate === 'keyboard') {
+    controlsKeyListKeyboard.classList.remove('hidden');
+    controlsKeyListGamepad.classList.add('hidden');
+  } else if (this.dataset.activate === 'gamepad') {
+    controlsKeyListGamepad.classList.remove('hidden');
+    controlsKeyListKeyboard.classList.add('hidden');
+  }
+  for (const child of this.parentNode.children) {
+    if (child !== this) {
+      child.classList.remove('active');
+    }
+  }
+  this.classList.add('active');
+}
+
 function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = parentNode.lastElementChild) {
   const button = keyButton.cloneNode(true);
   const container = button.querySelector('.container');

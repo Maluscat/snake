@@ -100,42 +100,56 @@
                 Keyboard Controls
               </div>
               <div class="body">
-                <ul class="key-list">
-                  {% block keyList %}
-                  <li>
-                    <span>Move left</span>
-                    <div class="btn-group" data-key-group="left">
-                      <button type="button" class="add-key-btn">
-                        <div class="container">+</div>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <span>Move right</span>
-                    <div class="btn-group" data-key-group="right">
-                      <button type="button" class="add-key-btn">
-                        <div class="container">+</div>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <span>Move up</span>
-                    <div class="btn-group" data-key-group="up">
-                      <button type="button" class="add-key-btn">
-                        <div class="container">+</div>
-                      </button>
-                    </div>
-                  </li>
-                  <li>
-                    <span>Move down</span>
-                    <div class="btn-group" data-key-group="down">
-                      <button type="button" class="add-key-btn">
-                        <div class="container">+</div>
-                      </button>
-                    </div>
-                  </li>
-                  {% endblock %}
-                </ul>
+                <div class="tab-group container" id="tabs-key-list">
+                  <button type="button" data-activate="keyboard" class="active">
+                    <div class="container">Keyboard</div>
+                  </button>
+                  <button type="button" data-activate="gamepad">
+                    <div class="container">Gamepad</div>
+                  </button>
+                </div>
+                <div class="key-lists">
+                {% for keyListType in ['keyboard', 'gamepad hidden'] %}
+
+                  <ul class="key-list {{ keyListType }}">
+                    {% block keyList %}
+                    <li>
+                      <span>Move left</span>
+                      <div class="btn-group" data-key-group="left">
+                        <button type="button" class="add-key-btn">
+                          <div class="container">+</div>
+                        </button>
+                      </div>
+                    </li>
+                    <li>
+                      <span>Move right</span>
+                      <div class="btn-group" data-key-group="right">
+                        <button type="button" class="add-key-btn">
+                          <div class="container">+</div>
+                        </button>
+                      </div>
+                    </li>
+                    <li>
+                      <span>Move up</span>
+                      <div class="btn-group" data-key-group="up">
+                        <button type="button" class="add-key-btn">
+                          <div class="container">+</div>
+                        </button>
+                      </div>
+                    </li>
+                    <li>
+                      <span>Move down</span>
+                      <div class="btn-group" data-key-group="down">
+                        <button type="button" class="add-key-btn">
+                          <div class="container">+</div>
+                        </button>
+                      </div>
+                    </li>
+                    {% endblock %}
+                  </ul>
+
+                {% endfor %}
+                </div>
               </div>
               <button type="button" class="focus" data-menu="controls">
                 <div class="container">Resume</div>

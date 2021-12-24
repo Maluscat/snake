@@ -63,6 +63,17 @@ button {
     }
   }
 }
+.btn-group, .tab-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tab-group > button {
+  flex: 1;
+  &.active .container {
+    background-color: hsl(0, 0%, 20.5%);
+    font-weight: bold;
+  }
+}
 
 .game-wrapper {
   position: relative;
@@ -81,6 +92,9 @@ button {
       right: 0;
       bottom: 0;
       left: 0;
+      > *:not(:last-child) {
+        margin-bottom: .5em;
+      }
       &:not(.backdrop-hidden) {
         background-color: hsla(0, 0%, 8%, .55);
       }
@@ -97,6 +111,9 @@ button {
           display: none;
         }
       }
+      &.hidden {
+        display: none;
+      }
       .heading {
         position: absolute;
         top: 0;
@@ -107,18 +124,19 @@ button {
         text-align: center;
         font-weight: bold;
       }
-      .btn-group {
-        display: flex;
-        flex-wrap: wrap;
+      .body > *:not(:last-child) {
+        margin-bottom: .3em;
       }
       button {
         margin: 0 .25em;
       }
-      &.hidden {
-        display: none;
-      }
-      > *:not(:last-child) {
-        margin-bottom: .5em;
+      .container > button {
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
       }
       .toggle-overlay {
         position: absolute;
@@ -148,10 +166,18 @@ button {
 }
 
 [data-overlay="controls"] {
+  .key-lists {
+    display: grid;
+  }
   .key-list {
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
     margin: 0;
     padding: 0;
     list-style: none;
+    &.hidden {
+      display: none;
+    }
     li {
       display: flex;
       flex-wrap: wrap;
