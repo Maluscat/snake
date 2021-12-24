@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   addControlKeysToKeylists(controlsKeyListGamepad, function(key, keyActionGroup) {
     if (typeof key === 'number') {
-      insertNewKeyButton(keyControl.GAMEPAD_BUTTONS[key], false, keyActionGroup);
+      insertNewKeyButton(KeyControl.GAMEPAD_BUTTONS[key], false, keyActionGroup);
     }
   });
 

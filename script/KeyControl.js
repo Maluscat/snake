@@ -1,7 +1,7 @@
 'use strict';
 class KeyControl {
   // Mapping names to their API indices
-  GAMEPAD_BUTTONS = [
+  static GAMEPAD_BUTTONS = [
     'rightPadDown',
     'rightPadRight',
     'rightPadLeft',
@@ -111,7 +111,7 @@ class KeyControl {
       const that = this;
       config.keys = config.keys.map(function(val) {
         if (val[0] === '[' && val[val.length - 1] === ']') {
-          return that.GAMEPAD_BUTTONS.indexOf(val.slice(1, -1));
+          return KeyControl.GAMEPAD_BUTTONS.indexOf(val.slice(1, -1));
         } else {
           return val;
         }
