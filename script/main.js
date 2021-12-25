@@ -67,15 +67,15 @@ function switchControlsKeyLists(e) {
   this.classList.add('active');
 }
 
-function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = parentNode.lastElementChild) {
+function insertNewKeyButton(btnContent, parentNode, isNewItem, eventType = 'keydown') {
   const button = keyButton.cloneNode(true);
   const container = button.querySelector('.container');
   // keeps track of the current value as stored in the keyControl actions
-  let arrayValue = btnContent;
+  let keyStr = btnContent;
 
-  parentNode.insertBefore(button, lastChild);
+  parentNode.insertBefore(button, parentNode.lastElementChild);
 
-  const keyGroupArray = keyControl.actions.keydown[button.parentNode.dataset.keyGroup].keys;
+  const keyGroupArray = keyControl.actions[eventType][button.parentNode.dataset.keyGroup].keys;
 
   if (btnContent) {
     container.textContent = btnContent;
@@ -123,7 +123,7 @@ function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = paren
   }
 
   function removeButton() {
-    keyGroupArray.splice(keyGroupArray.indexOf(arrayValue), 1);
+    keyGroupArray.splice(keyGroupArray.indexOf(keyStr), 1);
     button.remove();
   }
 
@@ -132,14 +132,14 @@ function insertNewKeyButton(btnContent, isNewItem, parentNode, lastChild = paren
       keyGroupArray.push(newValue);
       isNewItem = false;
     } else {
-      keyGroupArray[keyGroupArray.indexOf(arrayValue)] = newValue;
+      keyGroupArray[keyGroupArray.indexOf(keyStr)] = newValue;
     }
-    arrayValue = newValue;
+    keyStr = newValue;
   }
 }
 
 function addControlsKeyBtn(e) {
-  insertNewKeyButton(null, true, this.parentNode);
+  insertNewKeyButton(null, this.parentNode, true);
 }
 
 function focusElementInTabIndex(offset = 1) {

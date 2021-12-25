@@ -36,12 +36,23 @@
 
     keyControl.registerActions({
       forward: {
-        keys: ['[LT]', '{KeyQ}'],
+        keys: ['{KeyQ}'],
         tags: ['arrow-controls']
       },
       backward: {
-        keys: ['[RT]', '{KeyE}'],
+        keys: ['{KeyE}'],
         tags: ['arrow-controls']
+      }
+    });
+
+    keyControl.registerActions({
+      forward: {
+        keys: ['[LT]'],
+        tags: ['arrow-controls', 'gamepad-controls']
+      },
+      backward: {
+        keys: ['[RT]'],
+        tags: ['arrow-controls', 'gamepad-controls']
       }
     });
   </script>

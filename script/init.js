@@ -47,25 +47,21 @@ window.addEventListener('DOMContentLoaded', function() {
   snake.addEvent('gameOver', gameOver);
   snake.addEvent('score', handleScore);
 
-  addControlKeysToKeylists(controlsKeyListKeyboard, function(key, keyActionGroup) {
-    if (typeof key !== 'number') {
-      insertNewKeyButton(key, false, keyActionGroup);
-    }
-  });
+  addControlKeysToKeylists(controlsKeyListKeyboard, 'keydown');
 
-  addControlKeysToKeylists(controlsKeyListGamepad, function(key, keyActionGroup) {
-    if (typeof key === 'number') {
-      insertNewKeyButton(KeyControl.GAMEPAD_BUTTONS[key], false, keyActionGroup);
-    }
-  });
+  addControlKeysToKeylists(controlsKeyListGamepad, 'gamepadAction');
 
 
-  function addControlKeysToKeylists(keyList, callback) {
+  function addControlKeysToKeylists(keyList, eventType, callback) {
     for (const keyActionGroup of keyList.querySelectorAll('[data-key-group]')) {
-      const actionProps = keyControl.actions.keydown[keyActionGroup.dataset.keyGroup];
+      const actionProps = keyControl.actions[eventType][keyActionGroup.dataset.keyGroup];
       if (actionProps) {
         for (const key of actionProps.keys) {
-          callback(key, keyActionGroup);
+          let newKey = key;
+          if (eventType === 'gamepadAction') {
+            newKey = KeyControl.GAMEPAD_BUTTONS[key];
+          }
+          insertNewKeyButton(newKey, keyActionGroup, false, eventType);
         }
       }
     }
@@ -77,21 +73,29 @@ keyControl.addTag('arrow-controls', {
   fn: arrowKeyPress
 });
 
+keyControl.addTag('gamepad-controls', {
+  event: 'gamepadAction'
+});
+
+// Gampad emulated tab controls
 keyControl.registerActions({
-  'confirm': {
+  confirm: {
     keys: [0],
     gamepadTimeout: 200,
-    fn: () => document.activeElement.click()
+    fn: () => document.activeElement.click(),
+    tags: ['gamepad-controls']
   },
-  'tabNext': {
+  tabNext: {
     keys: [1],
     gamepadTimeout: 200,
-    fn: () => focusElementInTabIndex(1)
+    fn: () => focusElementInTabIndex(1),
+    tags: ['gamepad-controls']
   },
-  'tabPrevious': {
+  tabPrevious: {
     keys: [2],
     gamepadTimeout: 200,
-    fn: () => focusElementInTabIndex(-1)
+    fn: () => focusElementInTabIndex(-1),
+    tags: ['gamepad-controls']
   }
 });
 
@@ -114,19 +118,38 @@ keyControl.registerActions({
 
 keyControl.registerActions({
   left: {
-    keys: ['[leftPadLeft]', '{KeyA}', 'ArrowLeft'],
+    keys: ['{KeyA}', 'ArrowLeft'],
     tags: ['arrow-controls']
   },
   right: {
-    keys: ['[leftPadRight]', '{KeyD}', 'ArrowRight'],
+    keys: ['{KeyD}', 'ArrowRight'],
     tags: ['arrow-controls']
   },
   up: {
-    keys: ['[leftPadUp]', '{KeyW}', 'ArrowUp'],
+    keys: ['{KeyW}', 'ArrowUp'],
     tags: ['arrow-controls']
   },
   down: {
-    keys: ['[leftPadDown]', '{KeyS}', 'ArrowDown'],
+    keys: ['{KeyS}', 'ArrowDown'],
     tags: ['arrow-controls']
+  }
+});
+
+keyControl.registerActions({
+  left: {
+    keys: ['[leftPadLeft]'],
+    tags: ['arrow-controls', 'gamepad-controls']
+  },
+  right: {
+    keys: ['[leftPadRight]'],
+    tags: ['arrow-controls', 'gamepad-controls']
+  },
+  up: {
+    keys: ['[leftPadUp]'],
+    tags: ['arrow-controls', 'gamepad-controls']
+  },
+  down: {
+    keys: ['[leftPadDown]'],
+    tags: ['arrow-controls', 'gamepad-controls']
   }
 });

@@ -23,7 +23,8 @@ class KeyControl {
 
   actions = {
     keydown: {},
-    keyup: {}
+    keyup: {},
+    gamepadAction: {}
   };
   tags = {};
 
@@ -54,8 +55,8 @@ class KeyControl {
     for (const gamepadIndex in this.gamepads) {
       const gamepad = this.gamepads[gamepadIndex];
 
-      for (const actionName in this.actions.keydown) {
-        const action = this.actions.keydown[actionName];
+      for (const actionName in this.actions.gamepadAction) {
+        const action = this.actions.gamepadAction[actionName];
 
         const actionButtons = action.keys.filter(function(val) {
           return typeof val == 'number';
@@ -122,7 +123,12 @@ class KeyControl {
       config.$isReady = true;
     }
 
-    const target = this.actions[!config.event || config.event !== 'keyup' ? 'keydown' : 'keyup'];
+    const target = this.actions[config.event || 'keydown'];
+    if (!target) {
+      const err = new Error("specified event type '" + config.event + "' is not supported");
+      err.name = 'KeyControlError';
+      throw err;
+    }
     target[actionName] = config;
   };
   registerActions(configs) {
