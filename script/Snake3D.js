@@ -43,18 +43,25 @@ class Snake3D extends GLBoiler {
     mat4 rotateX;
     mat4 rotateY;
   };
-  mat4 staticScale = mat4(
+  uniform bool useShading;
+
+  const mat4 staticScale = mat4(
     1, 0, 0,  0,
     0, 1, 0,  0,
     0, 0, -1, 0,
     0, 0, 0,  1
   );
+  // Second half of shading is a bit lighter
+  const float colorMods[6] = float[](1.0, 0.9, 0.615, 0.8, 0.715, 0.515);
 
   out vec4 fragColor;
 
   void main() {
-    fragColor = vec4(colors, 1);
-    // fragColor = vec3(0, 0.5, 0);
+    if (useShading) {
+      fragColor = vec4(colors * colorMods[(gl_VertexID / 6) % 6], 1);
+    } else {
+      fragColor = vec4(colors, 1);
+    }
 
     mat4 matrix = perspective * translate * rotateX * rotateY * scale * staticScale * origin;
     gl_Position = matrix * points;
@@ -106,8 +113,11 @@ class Snake3D extends GLBoiler {
 
     this.aUniverPoints = gl.getAttribLocation(this.univerProgram, 'points');
     this.aUniverColors = gl.getAttribLocation(this.univerProgram, 'colors');
+
     this.uPointsFieldSize = gl.getUniformLocation(this.pointsProgram, 'fieldSize');
     this.uPointsMatrices = gl.getUniformBlockIndex(this.pointsProgram, 'GlobalMatrices');
+
+    this.uUniverUseShading = gl.getUniformLocation(this.univerProgram, 'useShading');
     this.uUniverMatrices = gl.getUniformBlockIndex(this.univerProgram, 'GlobalMatrices');
 
     // ---- vertex preparation ----
@@ -163,11 +173,15 @@ class Snake3D extends GLBoiler {
     this.gl.enableVertexAttribArray(this.aUniverPoints);
 
     // --- Frame ---
+    this.gl.uniform1i(this.uUniverUseShading, 0);
+
     this.bindPointsBuffer(this.outlinePoints);
     this.gl.vertexAttrib3f(this.aUniverColors, 0.5, 0.25, 0.75);
     this.gl.drawArrays(this.gl.LINES, 0, 24);
 
     // --- Apple ---
+    this.gl.uniform1i(this.uUniverUseShading, 1);
+
     this.bindPointsBuffer(this.applePoints);
     this.gl.vertexAttrib3f(this.aUniverColors, 0.5, 0, 0);
     this.gl.drawArrays(this.gl.TRIANGLES, 0, (this.applePoints.length / 3));
