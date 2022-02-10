@@ -160,33 +160,36 @@ class Snake3D extends GLBoiler {
 
     this.gl.useProgram(this.univerProgram);
 
-    // this.gl.enableVertexAttribArray(this.aUniverColors);
     this.gl.enableVertexAttribArray(this.aUniverPoints);
 
-    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.pointsBuffer);
-    this.gl.vertexAttribPointer(this.aUniverPoints, 3, this.gl.FLOAT, false, 0, 0);
-
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.outlinePoints, this.gl.STATIC_DRAW);
+    // --- Frame ---
+    this.bindPointsBuffer(this.outlinePoints);
     this.gl.vertexAttrib3f(this.aUniverColors, 0.5, 0.25, 0.75);
     this.gl.drawArrays(this.gl.LINES, 0, 24);
 
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.snakePoints, this.gl.STATIC_DRAW);
-    this.gl.vertexAttrib3f(this.aUniverColors, 0, 0.5, 0);
-    this.gl.drawArrays(this.gl.TRIANGLES, 0, (this.snakePoints.length / 3));
-
-    this.gl.bufferData(this.gl.ARRAY_BUFFER, this.applePoints, this.gl.STATIC_DRAW);
+    // --- Apple ---
+    this.bindPointsBuffer(this.applePoints);
     this.gl.vertexAttrib3f(this.aUniverColors, 0.5, 0, 0);
     this.gl.drawArrays(this.gl.TRIANGLES, 0, (this.applePoints.length / 3));
 
-    this.gl.disableVertexAttribArray(this.aUniverPoints);
-    // this.gl.disableVertexAttribArray(this.aUniverColors);
+    // --- Snake ---
+    this.bindPointsBuffer(this.snakePoints);
+    this.gl.vertexAttrib3f(this.aUniverColors, 0, 0.5, 0);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, (this.snakePoints.length / 3));
 
+    this.gl.disableVertexAttribArray(this.aUniverPoints);
+
+    // --- Points ---
     this.gl.useProgram(this.pointsProgram);
     this.gl.depthMask(false);
     this.gl.drawArraysInstanced(this.gl.POINTS, 0, 1, (this.dims + 1) * (this.dims + 1) * (this.dims + 1));
     this.gl.depthMask(true);
-  };
-
+  }
+  bindPointsBuffer(data) {
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.pointsBuffer);
+    this.gl.vertexAttribPointer(this.aUniverPoints, 3, this.gl.FLOAT, false, 0, 0);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, data, this.gl.STATIC_DRAW);
+  }
 
   // ---- general functions ----
   move() {
@@ -244,12 +247,11 @@ class Snake3D extends GLBoiler {
   drawGameCycle() {
     const snakePoints = new Array();
     for (const pos of this.snakePos) {
-      snakePoints.push(...this.getPosCube(pos));
+      snakePoints.push(...this.getCubePosVertices(pos));
     }
 
     this.snakePoints = new Float32Array(snakePoints);
-
-    this.applePoints = new Float32Array(this.getPosCube(this.applePos));
+    this.applePoints = new Float32Array(this.getCubePosVertices(this.applePos));
 
     this.draw();
   }
@@ -263,7 +265,7 @@ class Snake3D extends GLBoiler {
 
 
   // ---- drawing helper functions ----
-  getPosCube(pos) {
+  getCubePosVertices(pos) {
     return [
       // front
       pos[0],   pos[1],   pos[2],
