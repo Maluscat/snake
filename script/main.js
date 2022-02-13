@@ -7,15 +7,16 @@ function handleMenu(e, menuTarget = this.dataset.menu, spacePause) {
   const activeMenu = overlays.querySelector('.menu:not(.persistent):not(.hidden):not([data-overlay="' + menuTarget + '"])');
   const persistentMenus = overlays.querySelectorAll('.menu.persistent:not(.hidden):not([data-overlay="' + menuTarget + '"])');
 
-  // Hide a potentially active non-persistent overlay
-  if (activeMenu) {
-    if (spacePause) return;
-    activeMenu.classList.add('hidden');
-  }
-
-  // Toggle overlays which have been called directly by the event or which are hidden
+  // Handle overlays which have been called directly (not proxied) or which are hidden
   if (e || overlay.classList.contains('hidden')) {
-    overlay.classList.toggle('hidden');
+    // Check if any menu is open which disables the current one. If so, return
+    // This is used to deny keypresses
+    const activeDisablingMenus = overlays.querySelectorAll('.menu:not(.hidden)[data-disables]:not([data-overlay="' + menuTarget + '"])');
+    for (const disablingMenu of activeDisablingMenus) {
+      if (disablingMenu.dataset.disables.includes(menuTarget)) {
+        return;
+      }
+    }
 
     // Toggle buttons specified in `data-disables`
     if (overlay.dataset.disables) {
@@ -26,6 +27,14 @@ function handleMenu(e, menuTarget = this.dataset.menu, spacePause) {
         }
       }
     }
+
+    overlay.classList.toggle('hidden');
+  }
+
+  // Hide a potentially active non-persistent overlay
+  if (activeMenu) {
+    if (spacePause) return;
+    activeMenu.classList.add('hidden');
   }
 
   if (!overlay.classList.contains('hidden')) {
