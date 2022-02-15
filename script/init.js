@@ -2,8 +2,8 @@ const canvas = document.getElementById('canvas');
 const gameWrapper = document.querySelector('.game-wrapper');
 const gameWindow = gameWrapper.querySelector('.game-window');
 
-const gameScoreNode = gameWrapper.querySelector('.score .current .text');
-const highScoreNode = gameWrapper.querySelector('.score .highscore .text');
+const gameScoreNode = document.querySelector('#score .current .text');
+const highScoreNode = document.querySelector('#score .highscore .text');
 
 const menuBtns = document.querySelectorAll('button[data-menu]');
 const gameControlBtns = document.querySelectorAll('#game-controls button');
@@ -69,6 +69,14 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// This hack ensures that the canvas is square without overflowing
+(function() {
+  const minCanvasDim = Math.min(canvas.clientWidth, canvas.clientHeight);
+  canvas.width = minCanvasDim;
+  canvas.height = minCanvasDim;
+  document.body.classList.remove('init');
+}());
+
 keyControl.addTag('arrow-controls', {
   fn: arrowKeyPress
 });
@@ -77,7 +85,7 @@ keyControl.addTag('gamepad-controls', {
   event: 'gamepadAction'
 });
 
-// Gampad emulated tab controls
+// Gamepad emulated tab controls
 keyControl.registerActions({
   confirm: {
     keys: [0],

@@ -4,7 +4,7 @@
     {% include 'pages/templates/common-head.njk' %}
     <link rel="stylesheet" href="/style/snake/index.css">
   </head>
-  <body>
+  <body class="init">
     <main>
       <div id="game-controls">
         <button type="button" class="disabled" data-menu="playPause" tabindex="-1">
@@ -156,17 +156,21 @@
               </button>
             </div>
           </div>
-          <canvas id="canvas" width="600" height="600"></canvas>
+          <canvas id="canvas"></canvas>
         </div>
-        <div class="score">
+      </div>
+      <div id="score">
+        <div class="score-wrapper">
+          <span class="caption">Score</span>
           <div class="container current">
             <span class="text">0</span>
           </div>
-          <span class="caption">Score</span>
+        </div>
+        <div class="score-wrapper">
+          <span class="caption">Highscore</span>
           <div class="container highscore">
             <span class="text">0</span>
           </div>
-          <span class="caption">Highscore</span>
         </div>
       </div>
     </main>
