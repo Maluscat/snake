@@ -1,6 +1,7 @@
 'use strict';
 var Snake2D = (function() {
-  const CELL = 20;
+  const FIELDSIZE = 22;
+  const CELL = Math.min(canvas.clientWidth, canvas.clientHeight) / FIELDSIZE;
 
   let ctx;
   let applePos;
