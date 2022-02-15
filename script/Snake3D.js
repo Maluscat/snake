@@ -138,7 +138,7 @@ class Snake3D extends GLBoiler {
     gl.bindBuffer(gl.UNIFORM_BUFFER, matricesBuffer);
     gl.bufferData(gl.UNIFORM_BUFFER, matricesSize, gl.DYNAMIC_DRAW);
 
-    this.fillUniformMatrixBuffer('perspective', 0, [canvas, 2.175, 1, 250]);
+    this.fillUniformMatrixBuffer('perspective', 0, [canvas, 1.75, 1, 250]);
 
     gl.bindBufferBase(gl.UNIFORM_BUFFER, matricesIndex, matricesBuffer);
 
@@ -149,9 +149,9 @@ class Snake3D extends GLBoiler {
     this.controls = new Controls3D(canvas, this.draw.bind(this));
     this.controls.assignNewState({
       scale: {
-        x: 1.65,
-        y: 1.65,
-        z: 1.65
+        x: 1.7,
+        y: 1.7,
+        z: 1.7
       },
       tran: {
         z: -30
