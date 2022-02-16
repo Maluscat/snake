@@ -210,14 +210,19 @@ function startGame() {
 }
 
 function gameOver() {
+  localStorage.setItem(localStorageKey, highscore);
   handleMenu(null, 'gameover');
 }
 
 function handleScore(score) {
   gameScoreNode.textContent = score;
   if (score > highscore) {
-    highScoreNode.textContent = (highscore = score);
+    updateHighscore(score);
   }
+}
+function updateHighscore(newHighscore) {
+  highscore = newHighscore;
+  highScoreNode.textContent = newHighscore;
 }
 
 function toggleButton(buttonNode) {

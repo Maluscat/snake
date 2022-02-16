@@ -33,6 +33,8 @@ const keyButton = (function() {
   return button;
 })();
 
+const localStorageKey = (typeof Snake2D !== 'undefined' ? 'Snake2D_highscore' : 'Snake3D_highscore');
+
 let highscore = 0;
 
 
@@ -68,6 +70,13 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+
+(function() {
+  const storedHighscore = localStorage.getItem(localStorageKey);
+  if (storedHighscore != null) {
+    updateHighscore(Number(storedHighscore));
+  }
+}());
 
 // This hack ensures that the canvas is square without overflowing
 (function() {
