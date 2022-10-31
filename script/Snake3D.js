@@ -146,8 +146,7 @@ class Snake3D extends GLBoiler {
     this.updateFieldSize(10);
 
     // ---- controls ----
-    this.controls = new Controls3D(canvas, this.draw.bind(this));
-    this.controls.assignNewState({
+    this.state = new State3D(this.draw.bind(this), {
       scale: {
         x: 1.7,
         y: 1.7,
@@ -157,16 +156,17 @@ class Snake3D extends GLBoiler {
         z: -30
       },
     });
+    new Controls3D(canvas, this.state);
   }
 
   draw() {
     // Clear canvas, as preserveDrawingBuffer was set in the constructor
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    this.fillUniformMatrixBuffer('scale', 2 * 64, Object.values(this.controls.state.scale));
-    this.fillUniformMatrixBuffer('translate', 3 * 64, Object.values(this.controls.state.tran));
-    this.fillUniformMatrixBuffer('rotateX', 4 * 64, [this.controls.state.rot.x]);
-    this.fillUniformMatrixBuffer('rotateY', 5 * 64, [this.controls.state.rot.y]);
+    this.fillUniformMatrixBuffer('scale', 2 * 64, Object.values(this.state.scale));
+    this.fillUniformMatrixBuffer('translate', 3 * 64, Object.values(this.state.tran));
+    this.fillUniformMatrixBuffer('rotateX', 4 * 64, [this.state.rot.x]);
+    this.fillUniformMatrixBuffer('rotateY', 5 * 64, [this.state.rot.y]);
 
     this.gl.useProgram(this.univerProgram);
 
