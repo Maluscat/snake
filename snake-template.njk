@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% include 'pages/templates/common-head.njk' %}
-    <link rel="stylesheet" href="/style/snake/index.css">
+    <link rel="stylesheet" href="/snake/style/index.css">
   </head>
   <body class="init">
     <main>
@@ -176,9 +176,9 @@
     </main>
 
     {%- block scriptImport %}{% endblock %}
-    <script src="/js/snake/KeyControl.js"></script>
-    <script src="/js/snake/main.js"></script>
-    <script src="/js/snake/init.js"></script>
+    <script src="/snake/script/KeyControl.js"></script>
+    <script src="/snake/script/main.js"></script>
+    <script src="/snake/script/init.js"></script>
     {%- block initScript %}{% endblock %}
   </body>
 </html>
