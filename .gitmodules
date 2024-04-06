@@ -1,0 +1,6 @@
+[submodule "lib/controls3d"]
+	path = lib/controls3d
+	url = https://gitlab.com/Maluscat/controls3d.git
+[submodule "lib/graphics-tools"]
+	path = lib/graphics-tools
+	url = https://gitlab.com/Maluscat/graphics-tools.git
